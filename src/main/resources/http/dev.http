@@ -11,7 +11,6 @@ POST {{url}}/api/auth/register/
 
 ###
 POST {{url}}/api/auth/login/
-
 {
     "username": "test",
     "password": "test123"
