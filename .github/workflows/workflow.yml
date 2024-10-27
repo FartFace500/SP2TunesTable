@@ -24,9 +24,6 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
 
-      - name: Clean with Maven
-        run: mvn clean package -Dmaven.test.skip=true
-
       - name: Build with Maven
         run: mvn --batch-mode clean package -Dmaven.test.skip=true
 
