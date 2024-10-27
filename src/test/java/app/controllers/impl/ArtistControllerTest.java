@@ -31,8 +31,8 @@ class ArtistControllerTest {
     private static String userToken, adminToken;
     private static final int TEST_PORT = 7000;
 
-    @BeforeEach
-    void setUpEach() {
+    @BeforeAll
+    static void setUpAll() {
         HibernateConfig.setTest(true);
 
         app = ApplicationConfig.startServer(TEST_PORT);

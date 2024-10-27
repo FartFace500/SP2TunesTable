@@ -22,8 +22,8 @@ class ArtistDAOTest {
     private ArtistDTO artist1;
     private ArtistDTO artist2;
 
-    @BeforeEach
-    void setUpEach() {
+    @BeforeAll
+    static void setUpAll() {
         emf = HibernateConfig.getEntityManagerFactoryForTest();
         arDao = ArtistDAO.getInstance(emf);
     }

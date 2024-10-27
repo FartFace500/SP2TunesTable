@@ -3,6 +3,12 @@ name: CI/CD WORKFLOW
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'src/test/**'      # Ignore all files in the src/test directory
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+       - 'src/test/**'
 
 jobs:
   build:
