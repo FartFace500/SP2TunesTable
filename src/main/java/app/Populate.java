@@ -2,12 +2,15 @@ package app;
 
 import app.config.HibernateConfig;
 import app.dtos.AlbumDTO;
+import app.entities.Album;
 import app.entities.Artist;
+import app.entities.Song;
 import app.security.daos.SecurityDAO;
 import app.security.enums.Role;
 import app.utils.Utils;
 import app.utils.json.JsonReader;
 import dk.bugelhartmann.UserDTO;
+import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
@@ -16,6 +19,17 @@ import java.util.Set;
 public class Populate {
     public static void main(String[] args) {
         runMulti();
+    }
+
+    public void runIfEmpty(Context ctx) {
+        try (var em = HibernateConfig.getEntityManagerFactory().createEntityManager()) {
+            List<Artist> artistList = em.createQuery("select a from Artist a").getResultList();
+            List<Album> albumList = em.createQuery("select a from Album a").getResultList();
+            List<Song> songList = em.createQuery("select a from Song a").getResultList();
+            if (artistList.isEmpty() && albumList.isEmpty() && songList.isEmpty()) {
+                runMulti();
+            }
+        }
     }
 
 //     Old run method for one album

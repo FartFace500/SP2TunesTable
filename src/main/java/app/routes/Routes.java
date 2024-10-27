@@ -1,5 +1,6 @@
 package app.routes;
 
+import app.Populate;
 import app.security.routes.SecurityRoutes;
 import io.javalin.apibuilder.EndpointGroup;
 
@@ -10,6 +11,7 @@ public class Routes {
     private final ArtistRoute artistRoute = new ArtistRoute();
     private final AlbumRoute albumRoute = new AlbumRoute();
     private final SongRoute songRoute = new SongRoute();
+    private final PopulateRoute populateRoute = new PopulateRoute();
     private final SecurityRoutes securityRoutes = new SecurityRoutes();
 
     public EndpointGroup getRoutes() {
@@ -18,6 +20,7 @@ public class Routes {
             path("/albums", albumRoute.getRoutes());
             path("/songs", songRoute.getRoutes());
             path("/auth", securityRoutes.getSecurityRoutes());
+            path("/populate", populateRoute.getRoutes());
         };
     }
 }
