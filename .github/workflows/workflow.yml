@@ -25,6 +25,9 @@ jobs:
           distribution: 'corretto'
 
       - name: Build with Maven
+        run: mvn clean package
+
+      - name: Build with Maven
         run: mvn --batch-mode clean package -Dmaven.test.skip=true
 
       - name: Login to Docker Hub
