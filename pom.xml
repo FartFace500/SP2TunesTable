@@ -31,7 +31,7 @@
         <db.name>NAME-HERE</db.name>
 
         <!--  Javalin    -->
-        <javalin.port>7074</javalin.port>
+        <javalin.port>7071</javalin.port>
     </properties>
 
     <repositories>
