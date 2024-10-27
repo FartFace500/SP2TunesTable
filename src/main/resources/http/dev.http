@@ -88,3 +88,7 @@ Authorization: Bearer {{jwt_token}}
 ###
 DELETE {{url}}/api/albums/2
 Authorization: Bearer {{jwt_token}}
+
+### Test for populate route
+GET {{url}}/api/populate
+Accept: application/json
