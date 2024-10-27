@@ -1,0 +1,96 @@
+package dat.entities;
+
+import dat.config.HibernateConfig;
+import dat.dtos.AlbumDTO;
+import dat.dtos.ArtistDTO;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Artist {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
+    private String type;
+    @OneToMany(mappedBy = "artist")
+    @Cascade(CascadeType.PERSIST)
+    private List<Album> albums = new ArrayList<>();
+    @OneToMany(mappedBy = "artist")
+    @Cascade(CascadeType.PERSIST) //TODO: possibly change this
+    private List<Song> songs = new ArrayList<>(); //only used for singles
+
+    public Artist(ArtistDTO dto){
+        if (dto.getArtistId() != null) {
+        this.id = dto.getArtistId();
+        }
+        this.name = dto.getName();
+        this.type = dto.getType();
+//        this.albums = dto.getAlbums().stream().map(albumDTO -> new Album(albumDTO)).toList();
+//        this.songs = dto.getSongs().stream().map(songDTO -> new Song(songDTO)).toList();
+    }
+
+    public void addSongs(List<Song> songs){
+        for (Song song : songs) {
+        if (!this.songs.contains(song)) {
+            song.setSongSearchId(this.id + "-" + "0" + "-" + (this.songs.size() + 1));
+            song.setArtist(this);
+            this.songs.add(song);
+        }
+        }
+    }
+
+    public void addAlbumAsDTO(AlbumDTO albumDTO, int id){ //this is used by Populate
+        Album album = new Album(albumDTO);
+        if (!albums.contains(album)){
+            album.setAlbumSearchId(this.id + "-" + String.valueOf(id));
+            album.addSongsAsDTO(albumDTO.getTracks().getSongs());
+            album.setArtist(this);
+            album.updateSongs();
+            this.albums.add(album);
+        }
+    }
+
+    public void addAlbum(Album album){
+        if (!albums.contains(album)){
+            album.setAlbumSearchId(this.id + "-" + (this.getAlbums().size() + 1));
+            album.setArtist(this);
+            album.updateSongs();
+            this.albums.add(album);
+        }
+    }
+
+    public void transferSinglesToAlbum(String albumId, String songId){
+        for (Album album : albums) {
+            if (album.getAlbumSearchId().equals(albumId)) {
+                for (Song song : songs) {
+                    if (song.getSongSearchId().equals(songId)) {
+                        if (!album.getSongs().contains(song)) {
+                            try(var em = HibernateConfig.getEntityManagerFactory().createEntityManager()){
+                                Album foundAlbum = em.find(Album.class, albumId);
+                                List<Song> singles = List.of(song);
+                                foundAlbum.addSongs(singles);
+                                this.songs.remove(song);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void transferFromAlbumToSingle(String albumId, String songId){
+        //might be able to copy a lot from the method above
+    }
+
+}

@@ -5,10 +5,10 @@ FROM amazoncorretto:17-alpine
 RUN apk update && apk add --no-cache curl
 
 # Copy the jar file into the image
-COPY target/app.jar /app.jar
+COPY target/app.jar /dat.jar
 
-# Expose the port your app runs on
+# Expose the port your dat runs on
 EXPOSE 7071
 
-# Command to run your app
-CMD ["java", "-jar", "/app.jar"]
+# Command to run your dat
+CMD ["java", "-jar", "/dat.jar"]
