@@ -12,9 +12,13 @@ POST {{url}}/api/auth/register/
 ###
 POST {{url}}/api/auth/login/
 
+#{
+#    "username": "user456",
+#    "password": "user123"
+#}
 {
-    "username": "test",
-    "password": "test123"
+    "username": "admin",
+    "password": "tunesAdmin2024"
 }
 
 > {%
@@ -64,6 +68,7 @@ GET {{url}}/api/songs
 ### Retrieve album by id
 GET {{url}}/api/albums/1
 Accept: application/json
+Authorization: Bearer {{jwt_token}}
 
 ### Add a new album
 POST {{url}}/api/albums
