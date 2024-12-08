@@ -23,10 +23,12 @@ public class Populate {
 
     public void runIfEmpty(Context ctx) {
         try (var em = HibernateConfig.getEntityManagerFactory().createEntityManager()) {
-            List<Artist> artistList = em.createQuery("select a from Artist a").getResultList();
-            List<Album> albumList = em.createQuery("select a from Album a").getResultList();
-            List<Song> songList = em.createQuery("select a from Song a").getResultList();
-            if (artistList.isEmpty() && albumList.isEmpty() && songList.isEmpty()) {
+            long artistCount = (long) em.createQuery("select count(a) from Artist a").getSingleResult();
+            long albumCount = (long) em.createQuery("select count(a) from Album a").getSingleResult();
+            long songCount = (long) em.createQuery("select count(a) from Song a").getSingleResult();
+
+            System.out.println(artistCount + "-" + albumCount + "-" + songCount);
+            if (artistCount == 0 && albumCount == 0 && songCount == 0) {
                 runMulti();
             }
         }
@@ -86,8 +88,6 @@ public class Populate {
             } else {
                 seedAdminUser(securityDAO); // creates admin user with credentials from config.properties
             }
-
-            em.getTransaction().commit();
 
             int availableAlbumIndex = 1; //starts at one because place 0 is for singles
             for (AlbumDTO albumDTO : albumDTOs) {
@@ -162,5 +162,4 @@ public class Populate {
             System.out.println("Failed to create roles: " + e.getMessage());
         }
     }
-
 }
