@@ -18,10 +18,23 @@ import java.util.Set;
 
 public class Populate {
     public static void main(String[] args) {
-        runMulti();
+        runIfEmpty();
     }
 
     public void runIfEmpty(Context ctx) {
+        try (var em = HibernateConfig.getEntityManagerFactory().createEntityManager()) {
+            long artistCount = (long) em.createQuery("select count(a) from Artist a").getSingleResult();
+            long albumCount = (long) em.createQuery("select count(a) from Album a").getSingleResult();
+            long songCount = (long) em.createQuery("select count(a) from Song a").getSingleResult();
+
+            System.out.println(artistCount + "-" + albumCount + "-" + songCount);
+            if (artistCount == 0 && albumCount == 0 && songCount == 0) {
+                runMulti();
+            }
+        }
+    }
+
+    public static void runIfEmpty() {
         try (var em = HibernateConfig.getEntityManagerFactory().createEntityManager()) {
             long artistCount = (long) em.createQuery("select count(a) from Artist a").getSingleResult();
             long albumCount = (long) em.createQuery("select count(a) from Album a").getSingleResult();
@@ -91,7 +104,6 @@ public class Populate {
 
             int availableAlbumIndex = 1; //starts at one because place 0 is for singles
             for (AlbumDTO albumDTO : albumDTOs) {
-                em.getTransaction().begin();
 
                 Artist artist = new Artist(albumDTO.getArtists().get(0));
                 em.persist(artist);
@@ -108,9 +120,9 @@ public class Populate {
                 artist.addAlbumAsDTO(albumDTO, availableAlbumIndex);
                 em.persist(artist);
 
-                em.getTransaction().commit();
             }
 
+            em.getTransaction().commit();
             System.out.println("Albums added to database");
         } catch (Exception e) {
             System.out.println("Failed to add albums to database: " + e.getMessage());
