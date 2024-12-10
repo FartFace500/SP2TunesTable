@@ -26,7 +26,7 @@ public class Artist {
     private String popularity;
     private String imageUrl;
     private String spotifyId;
-    private String genresAsJsonArray;
+    private String genresAsString;
     @OneToMany(mappedBy = "artist")
     @Cascade(CascadeType.PERSIST)
     private List<Album> albums = new ArrayList<>();
@@ -43,7 +43,7 @@ public class Artist {
         this.popularity = dto.getPopularity();
         this.imageUrl = dto.getImageUrl();
         this.spotifyId = dto.getSpotifyId();
-//        this.genresAsJsonArray = dto.getGenres(); //TODO: fix this later
+        this.genresAsString = String.join("!",dto.getGenres());
     }
 
     public void addSongs(List<Song> songs){

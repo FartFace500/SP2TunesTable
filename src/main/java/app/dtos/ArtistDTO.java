@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -38,6 +39,6 @@ public class ArtistDTO {
         this.imageUrl = artist.getImageUrl();
         this.popularity = artist.getPopularity();
         this.spotifyId = artist.getSpotifyId();
-//        this.genres = artist.getGenresAsJsonArray(); //TODO: fix this later
+        this.genres = Arrays.stream(artist.getGenresAsString().split("!")).toList();
     }
 }
