@@ -195,6 +195,7 @@ public class JsonReader {
         for (AlbumDTO album : albums) {
             album.getArtists().get(0).setImageUrl(artists.get(album.getArtists().get(0).getSpotifyId()).getImageUrl());
             album.getArtists().get(0).setGenres(artists.get(album.getArtists().get(0).getSpotifyId()).getGenres());
+            album.getArtists().get(0).setPopularity(artists.get(album.getArtists().get(0).getSpotifyId()).getPopularity());
             for (SongDTO song : album.getTracks().getSongs()) {
                 song.setImageUrl(songs.get(song.getSpotifyId()).getImageUrl());
                 song.setReleaseDate(songs.get(song.getSpotifyId()).getReleaseDate());
