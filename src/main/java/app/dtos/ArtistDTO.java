@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -14,12 +17,17 @@ import lombok.*;
 public class ArtistDTO {
 
     Integer artistId;
+    @JsonProperty("id")
+    String spotifyId;
     @JsonProperty("name")
     String name;
     @JsonProperty("type")
     String type;
-//    List<AlbumDTO> albums;
-//    List<SongDTO> songs;
+    @JsonProperty("popularity")
+    String popularity;
+    @JsonProperty("genres")
+    List<String> genres = new ArrayList<>();
+    String imageUrl;
 
     public ArtistDTO(Artist artist) {
         if (artist.getId() != null) {
@@ -27,7 +35,9 @@ public class ArtistDTO {
         }
         this.name = artist.getName();
         this.type = artist.getType();
-//        this.albums = artist.getAlbums().stream().map(album -> new AlbumDTO(album)).toList();
-//        this.songs = artist.getSongs().stream().map(song -> new SongDTO(song)).toList();
+        this.imageUrl = artist.getImageUrl();
+        this.popularity = artist.getPopularity();
+        this.spotifyId = artist.getSpotifyId();
+//        this.genres = artist.getGenresAsJsonArray(); //TODO: fix this later
     }
 }

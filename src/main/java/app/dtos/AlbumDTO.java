@@ -16,6 +16,9 @@ import java.util.List;
 public class AlbumDTO {
     String albumId;
     String albumSearchId;
+    String imageUrl; // make custom deserializer that gets the first "url" in "images"'s list
+    @JsonProperty("id")
+    String spotifyId;
     @JsonProperty("name")
     String name;
     @JsonProperty("type")
@@ -38,6 +41,8 @@ public class AlbumDTO {
         this.type = album.getType();
         this.totalSongs = album.getTotalSongs();
         this.releaseDate = album.getReleaseDate();
+        this.imageUrl = album.getImageUrl();
+        this.spotifyId = album.getSpotifyId();
         if (album.getArtist() != null) {
         this.artists = List.of(new ArtistDTO(album.getArtist()));
         }

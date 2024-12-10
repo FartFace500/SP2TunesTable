@@ -19,6 +19,9 @@ public class Song {
     private String name;
     private String type;
     private int songNumber;
+    private String releaseDate;
+    private String imageUrl;
+    private String spotifyId;
     @ManyToOne
     @ToString.Exclude
     private Album album;
@@ -34,8 +37,9 @@ public class Song {
         this.name = dto.getName();
         this.type = dto.getType();
         this.songNumber = dto.getSongNumber();
-//        this.album = new Album(dto.getAlbum());
-//        this.artist = new Artist(dto.getArtist());
+        this.releaseDate = dto.getReleaseDate();
+        this.imageUrl = dto.getImageUrl();
+        this.spotifyId = dto.getSpotifyId();
     }
 
     public void giveId(int existingSongs){ //do NOT run this if it already connected to an artist/album

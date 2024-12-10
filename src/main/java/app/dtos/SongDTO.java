@@ -14,6 +14,8 @@ import lombok.*;
 public class SongDTO {
     String songId;
     String songSearchId;
+    @JsonProperty("id")
+    String spotifyId;
     @JsonProperty("name")
     String name;
     @JsonProperty("type")
@@ -21,8 +23,8 @@ public class SongDTO {
     //not fetching artist, adding the primary artist manually
     @JsonProperty("track_number")
     int songNumber;
-//    AlbumDTO album;
-//    ArtistDTO artist;
+    String releaseDate;
+    String imageUrl;
 
     public SongDTO(Song song) {
         if (song.getId() != null) {
@@ -32,7 +34,8 @@ public class SongDTO {
         this.name = song.getName();
         this.type = song.getType();
         this.songNumber = song.getSongNumber();
-//        this.album = new AlbumDTO(song.getAlbum());
-//        this.artist = new ArtistDTO(song.getArtist());
+        this.releaseDate = song.getReleaseDate();
+        this.imageUrl = song.getImageUrl();
+        this.spotifyId = song.getSpotifyId();
     }
 }

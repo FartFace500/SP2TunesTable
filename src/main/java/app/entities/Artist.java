@@ -23,6 +23,10 @@ public class Artist {
     private Integer id;
     private String name;
     private String type;
+    private String popularity;
+    private String imageUrl;
+    private String spotifyId;
+    private String genresAsJsonArray;
     @OneToMany(mappedBy = "artist")
     @Cascade(CascadeType.PERSIST)
     private List<Album> albums = new ArrayList<>();
@@ -36,8 +40,10 @@ public class Artist {
         }
         this.name = dto.getName();
         this.type = dto.getType();
-//        this.albums = dto.getAlbums().stream().map(albumDTO -> new Album(albumDTO)).toList();
-//        this.songs = dto.getSongs().stream().map(songDTO -> new Song(songDTO)).toList();
+        this.popularity = dto.getPopularity();
+        this.imageUrl = dto.getImageUrl();
+        this.spotifyId = dto.getSpotifyId();
+//        this.genresAsJsonArray = dto.getGenres(); //TODO: fix this later
     }
 
     public void addSongs(List<Song> songs){

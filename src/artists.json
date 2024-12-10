@@ -1,0 +1,415 @@
+{
+  "artists": [
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/1Xyo4u8uXC1ZmMpatF05PJ"
+      },
+      "followers": {
+        "href": null,
+        "total": 95971547
+      },
+      "genres": [
+        "canadian contemporary r&b",
+        "canadian pop",
+        "pop"
+      ],
+      "href": "https://api.spotify.com/v1/artists/1Xyo4u8uXC1ZmMpatF05PJ",
+      "id": "1Xyo4u8uXC1ZmMpatF05PJ",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5eb9e528993a2820267b97f6aae",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab676161000051749e528993a2820267b97f6aae",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f1789e528993a2820267b97f6aae",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "name": "The Weeknd",
+      "popularity": 96,
+      "type": "artist",
+      "uri": "spotify:artist:1Xyo4u8uXC1ZmMpatF05PJ"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/51Blml2LZPmy7TTiAg47vQ"
+      },
+      "followers": {
+        "href": null,
+        "total": 12776870
+      },
+      "genres": [
+        "irish rock",
+        "permanent wave",
+        "rock"
+      ],
+      "href": "https://api.spotify.com/v1/artists/51Blml2LZPmy7TTiAg47vQ",
+      "id": "51Blml2LZPmy7TTiAg47vQ",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5ebe62be215d2ee31bcd97edaba",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616100005174e62be215d2ee31bcd97edaba",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f178e62be215d2ee31bcd97edaba",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "name": "U2",
+      "popularity": 79,
+      "type": "artist",
+      "uri": "spotify:artist:51Blml2LZPmy7TTiAg47vQ"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/7guDJrEfX3qb6FEbdPA5qi"
+      },
+      "followers": {
+        "href": null,
+        "total": 6704872
+      },
+      "genres": [
+        "motown",
+        "soul"
+      ],
+      "href": "https://api.spotify.com/v1/artists/7guDJrEfX3qb6FEbdPA5qi",
+      "id": "7guDJrEfX3qb6FEbdPA5qi",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/c59faacbed7aa770266bad048660810eca204108",
+          "height": 1008,
+          "width": 1000
+        },
+        {
+          "url": "https://i.scdn.co/image/37c7875911b1d8195b05d40061a86bd01908a0d9",
+          "height": 645,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/3b24b51bf11404089c4d66acd0c612539c77e7e7",
+          "height": 202,
+          "width": 200
+        },
+        {
+          "url": "https://i.scdn.co/image/05489744160e3f6f94f707fa1e2a6d4bbd14a298",
+          "height": 64,
+          "width": 64
+        }
+      ],
+      "name": "Stevie Wonder",
+      "popularity": 79,
+      "type": "artist",
+      "uri": "spotify:artist:7guDJrEfX3qb6FEbdPA5qi"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/1dfeR4HaWDbWqFHLkxsg1d"
+      },
+      "followers": {
+        "href": null,
+        "total": 52202480
+      },
+      "genres": [
+        "classic rock",
+        "glam rock",
+        "rock"
+      ],
+      "href": "https://api.spotify.com/v1/artists/1dfeR4HaWDbWqFHLkxsg1d",
+      "id": "1dfeR4HaWDbWqFHLkxsg1d",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/b040846ceba13c3e9c125d68389491094e7f2982",
+          "height": 806,
+          "width": 999
+        },
+        {
+          "url": "https://i.scdn.co/image/af2b8e57f6d7b5d43a616bd1e27ba552cd8bfd42",
+          "height": 516,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/c06971e9ff81696699b829484e3be165f4e64368",
+          "height": 161,
+          "width": 200
+        },
+        {
+          "url": "https://i.scdn.co/image/6dd0ffd270903d1884edf9058c49f58b03db893d",
+          "height": 52,
+          "width": 64
+        }
+      ],
+      "name": "Queen",
+      "popularity": 86,
+      "type": "artist",
+      "uri": "spotify:artist:1dfeR4HaWDbWqFHLkxsg1d"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/6XyY86QOPPrYVGvF9ch6wz"
+      },
+      "followers": {
+        "href": null,
+        "total": 27952596
+      },
+      "genres": [
+        "alternative metal",
+        "nu metal",
+        "post-grunge",
+        "rap metal",
+        "rock"
+      ],
+      "href": "https://api.spotify.com/v1/artists/6XyY86QOPPrYVGvF9ch6wz",
+      "id": "6XyY86QOPPrYVGvF9ch6wz",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5ebc7e6bd9e65eab62a53355576",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616100005174c7e6bd9e65eab62a53355576",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f178c7e6bd9e65eab62a53355576",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "name": "Linkin Park",
+      "popularity": 93,
+      "type": "artist",
+      "uri": "spotify:artist:6XyY86QOPPrYVGvF9ch6wz"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/6P7H3ai06vU1sGvdpBwDmE"
+      },
+      "followers": {
+        "href": null,
+        "total": 2334749
+      },
+      "genres": [
+        "album rock",
+        "classic rock",
+        "country rock",
+        "folk rock",
+        "mellow gold",
+        "rock",
+        "soft rock",
+        "yacht rock"
+      ],
+      "href": "https://api.spotify.com/v1/artists/6P7H3ai06vU1sGvdpBwDmE",
+      "id": "6P7H3ai06vU1sGvdpBwDmE",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/9d01e4e9aac39b891d684d3d1a5b3a451d7c72bd",
+          "height": 1242,
+          "width": 1000
+        },
+        {
+          "url": "https://i.scdn.co/image/067bf3caa525edb4e97e19b2a630ccf361897350",
+          "height": 795,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/c930cc3599a165211fa20c3ec0d70d1a3cbe4778",
+          "height": 248,
+          "width": 200
+        },
+        {
+          "url": "https://i.scdn.co/image/85996811ba349faa5a467296baee6c7cd7518476",
+          "height": 79,
+          "width": 64
+        }
+      ],
+      "name": "Steely Dan",
+      "popularity": 69,
+      "type": "artist",
+      "uri": "spotify:artist:6P7H3ai06vU1sGvdpBwDmE"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/7M1FPw29m5FbicYzS2xdpi"
+      },
+      "followers": {
+        "href": null,
+        "total": 1210917
+      },
+      "genres": [
+        "art rock",
+        "instrumental rock",
+        "jazz rock",
+        "progressive rock",
+        "psychedelic rock",
+        "symphonic rock",
+        "zolo"
+      ],
+      "href": "https://api.spotify.com/v1/artists/7M1FPw29m5FbicYzS2xdpi",
+      "id": "7M1FPw29m5FbicYzS2xdpi",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5eb7c1c2fcf5a73dbfa60a40a18",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab676161000051747c1c2fcf5a73dbfa60a40a18",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f1787c1c2fcf5a73dbfa60a40a18",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "name": "King Crimson",
+      "popularity": 57,
+      "type": "artist",
+      "uri": "spotify:artist:7M1FPw29m5FbicYzS2xdpi"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/0k17h0D3J5VfsdmQ1iZtE9"
+      },
+      "followers": {
+        "href": null,
+        "total": 21243129
+      },
+      "genres": [
+        "album rock",
+        "art rock",
+        "classic rock",
+        "progressive rock",
+        "psychedelic rock",
+        "rock",
+        "symphonic rock"
+      ],
+      "href": "https://api.spotify.com/v1/artists/0k17h0D3J5VfsdmQ1iZtE9",
+      "id": "0k17h0D3J5VfsdmQ1iZtE9",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/e69f71e2be4b67b82af90fb8e9d805715e0684fa",
+          "height": 977,
+          "width": 1000
+        },
+        {
+          "url": "https://i.scdn.co/image/d011c95081cd9a329e506abd7ded47535d524a07",
+          "height": 625,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/f0a39a8a196a87a7236bdcf8a8708f6d5d3547cc",
+          "height": 195,
+          "width": 200
+        },
+        {
+          "url": "https://i.scdn.co/image/ec1fb7127168dbaa962404031409c5a293b95ec6",
+          "height": 63,
+          "width": 64
+        }
+      ],
+      "name": "Pink Floyd",
+      "popularity": 80,
+      "type": "artist",
+      "uri": "spotify:artist:0k17h0D3J5VfsdmQ1iZtE9"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/00tVTdpEhQQw1bqdu8RCx2"
+      },
+      "followers": {
+        "href": null,
+        "total": 1612349
+      },
+      "genres": [
+        "album rock",
+        "classic rock",
+        "glam metal",
+        "hard rock",
+        "progressive rock",
+        "rock"
+      ],
+      "href": "https://api.spotify.com/v1/artists/00tVTdpEhQQw1bqdu8RCx2",
+      "id": "00tVTdpEhQQw1bqdu8RCx2",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5eba50ccc99f741a7899654bc16",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616100005174a50ccc99f741a7899654bc16",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f178a50ccc99f741a7899654bc16",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "name": "Blue Öyster Cult",
+      "popularity": 64,
+      "type": "artist",
+      "uri": "spotify:artist:00tVTdpEhQQw1bqdu8RCx2"
+    },
+    {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/16eRpMNXSQ15wuJoeqguaB"
+      },
+      "followers": {
+        "href": null,
+        "total": 818455
+      },
+      "genres": [
+        "alternative rock",
+        "chamber pop",
+        "indie rock",
+        "indietronica",
+        "noise pop",
+        "okc indie",
+        "singer-songwriter"
+      ],
+      "href": "https://api.spotify.com/v1/artists/16eRpMNXSQ15wuJoeqguaB",
+      "id": "16eRpMNXSQ15wuJoeqguaB",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab6761610000e5eb81fb61484553c2a921f8a8c6",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000517481fb61484553c2a921f8a8c6",
+          "height": 320,
+          "width": 320
+        },
+        {
+          "url": "https://i.scdn.co/image/ab6761610000f17881fb61484553c2a921f8a8c6",
+          "height": 160,
+          "width": 160
+        }
+      ],
+      "name": "The Flaming Lips",
+      "popularity": 56,
+      "type": "artist",
+      "uri": "spotify:artist:16eRpMNXSQ15wuJoeqguaB"
+    }
+  ]
+}

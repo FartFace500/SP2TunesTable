@@ -26,6 +26,8 @@ public class Album {
     private String type;
     private int totalSongs;
     private String releaseDate;
+    private String imageUrl;
+    private String spotifyId;
     @ManyToOne
     @ToString.Exclude
     private Artist artist;
@@ -42,6 +44,8 @@ public class Album {
         this.type = dto.getType();
         this.totalSongs = dto.getTotalSongs();
         this.releaseDate = dto.getReleaseDate();
+        this.imageUrl = dto.getImageUrl();
+        this.spotifyId = dto.getSpotifyId();
         if (dto.getArtists() != null){
         this.artist = dto.getArtists().stream().map(artist -> new Artist(artist)).toList().get(0);
         }
