@@ -20,11 +20,13 @@ import java.util.List;
 public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
     private String name;
     private String type;
     private String popularity;
     private String imageUrl;
+    @Column(name = "spotifyId")
     private String spotifyId;
     private String genresAsString;
     @OneToMany(mappedBy = "artist")

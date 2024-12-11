@@ -13,6 +13,7 @@ import lombok.*;
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
     @Column(columnDefinition = "VARCHAR(255)", unique = true)
     private String songSearchId; //is given when an album is created, after an artist is persisted
@@ -21,7 +22,9 @@ public class Song {
     private int songNumber;
     private String releaseDate;
     private String imageUrl;
+    @Column(name = "spotifyId")
     private String spotifyId;
+    private String artistName;
     @ManyToOne
     @ToString.Exclude
     private Album album;
@@ -40,6 +43,7 @@ public class Song {
         this.releaseDate = dto.getReleaseDate();
         this.imageUrl = dto.getImageUrl();
         this.spotifyId = dto.getSpotifyId();
+        this.artistName = dto.getArtistName();
     }
 
     public void giveId(int existingSongs){ //do NOT run this if it already connected to an artist/album

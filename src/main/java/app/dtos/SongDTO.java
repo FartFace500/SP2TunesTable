@@ -25,6 +25,7 @@ public class SongDTO {
     int songNumber;
     String releaseDate;
     String imageUrl;
+    String artistName;
 
     public SongDTO(Song song) {
         if (song.getId() != null) {
@@ -37,5 +38,6 @@ public class SongDTO {
         this.releaseDate = song.getReleaseDate();
         this.imageUrl = song.getImageUrl();
         this.spotifyId = song.getSpotifyId();
+        this.artistName = song.getArtistName();
     }
 }

@@ -160,6 +160,7 @@ public class JsonReader {
                                 objectMapper.getTypeFactory().constructType(String.class));
                         String releaseDate = objectMapper.treeToValue(node.path("album").path("release_date"),
                                 objectMapper.getTypeFactory().constructType(String.class));
+
                         song.setImageUrl(imageUrl);
                         song.setReleaseDate(releaseDate);
 //                        System.out.println();
@@ -199,6 +200,7 @@ public class JsonReader {
             for (SongDTO song : album.getTracks().getSongs()) {
                 song.setImageUrl(songs.get(song.getSpotifyId()).getImageUrl());
                 song.setReleaseDate(songs.get(song.getSpotifyId()).getReleaseDate());
+                song.setArtistName(album.getArtists().get(0).getName());
             }
         }
             return albums;

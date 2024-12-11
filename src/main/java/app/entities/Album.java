@@ -19,6 +19,7 @@ import java.util.List;
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
     @Column(columnDefinition = "VARCHAR(255)", unique = true)
     private String albumSearchId; //is given right after Artist is persisted
@@ -27,6 +28,7 @@ public class Album {
     private int totalSongs;
     private String releaseDate;
     private String imageUrl;
+    @Column(name = "spotifyId")
     private String spotifyId;
     @ManyToOne
     @ToString.Exclude
