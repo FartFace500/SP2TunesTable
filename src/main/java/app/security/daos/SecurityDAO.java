@@ -1,16 +1,15 @@
 package app.security.daos;
 
 
+import app.exceptions.DaoException;
 import app.security.entities.Role;
 import app.security.entities.User;
 import app.security.exceptions.ApiException;
 import app.security.exceptions.ValidationException;
 import dk.bugelhartmann.UserDTO;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -29,6 +28,71 @@ public class SecurityDAO implements ISecurityDAO {
 
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+
+    public User createUser(app.dtos.UserDTO dto) throws ValidationException {
+        String standardRole = "USER";
+        try (EntityManager em = getEntityManager()) {
+            User userEntity = em.find(User.class, dto.getUsername());
+            if (userEntity != null)
+                throw new EntityExistsException("User with username: " + dto.getUsername() + " already exists");
+
+            userEntity = new User(dto);
+
+            em.getTransaction().begin();
+
+            createRoleIfNotPresent(standardRole.toUpperCase());
+            Role userRole = em.find(Role.class, standardRole.toUpperCase());
+
+            userEntity.addRole(userRole);
+
+            em.persist(userEntity);
+            em.getTransaction().commit();
+
+            return userEntity;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ApiException(400, e.getMessage());
+        }
+    }
+
+    @Override
+    public List<app.dtos.UserDTO> readAllUsers() {
+        try (EntityManager em = getEntityManager()) {
+            List<User> userList = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+            if (userList.isEmpty())
+                throw new EntityNotFoundException("No users found"); //RuntimeException
+            return app.dtos.UserDTO.fromUserDTOList(userList);
+        }
+    }
+
+    @Override
+    public app.dtos.UserDTO readUser(String username) {
+        try (EntityManager em = getEntityManager()) {
+            User user = em.find(User.class, username);
+            if (user == null)
+                throw new EntityNotFoundException("No user found with username: " + username); //RuntimeException
+            return app.dtos.UserDTO.getTrimmedDto(user);
+        }
+    }
+
+    @Override
+    public app.dtos.UserDTO updateUser(String username, app.dtos.UserDTO userDTO) {
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+            User user = em.find(User.class, username);
+            if (user == null) {
+                throw new DaoException.EntityNotFoundException(User.class, username);
+            }
+            user.getRoles().size(); // force roles to be fetched from db
+            userDTO.addRoles(user.getRoles().stream().map(r -> r.getRoleName()).collect(Collectors.toSet()));
+            user.copyInfoFromDto(userDTO);
+            User mergedUser = em.merge(user);
+            em.getTransaction().commit();
+            return mergedUser != null ? app.dtos.UserDTO.getTrimmedDto(mergedUser) : null;
+        } catch (Exception e) {
+            throw new DaoException.EntityUpdateException(User.class, username, e);
+        }
     }
 
     @Override

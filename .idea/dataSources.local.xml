@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="IU-242.20224.419">
-    <data-source name="tunestable@localhost" uuid="2432959e-8abd-47a3-afdc-cc042a1cd672">
+    <data-source name="tunestable@165.227.133.24" uuid="aa12380e-3f49-4f2d-b6bb-6ce372244d55">
       <database-info product="PostgreSQL" version="16.2 (Debian 16.2-1.pgdg120+2)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.6.0" dbms="POSTGRES" exact-version="16.2" exact-driver-version="42.6">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
@@ -16,8 +16,8 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
-    <data-source name="tunestable@165.227.133.24" uuid="aa12380e-3f49-4f2d-b6bb-6ce372244d55">
-      <database-info product="PostgreSQL" version="16.2 (Debian 16.2-1.pgdg120+2)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.6.0" dbms="POSTGRES" exact-version="16.2" exact-driver-version="42.6">
+    <data-source name="postgres@localhost" uuid="71af4d98-6bbb-4d59-88d6-16c455ddb2b2">
+      <database-info product="PostgreSQL" version="16.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.6.0" dbms="POSTGRES" exact-version="16.4" exact-driver-version="42.6">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
@@ -25,7 +25,9 @@
       <user-name>postgres</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="database" qname="@">
+          <node kind="database">
+            <name qname="@" />
+            <name qname="tunestable" />
             <node kind="schema" qname="@" />
           </node>
         </introspection-scope>

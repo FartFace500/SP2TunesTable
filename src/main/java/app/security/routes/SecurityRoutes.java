@@ -34,4 +34,13 @@ public class SecurityRoutes {
             });
         };
     }
+    public static EndpointGroup getInfoRoutes(){
+        return ()->{
+            path("/info", ()->{
+                get("/users", securityController::readAllUsers, Role.USER);
+                get("/users/{username}", securityController::readUser, Role.USER);
+                put("/users/{username}/update_info", securityController::readUser, Role.USER);
+            });
+        };
+    }
 }

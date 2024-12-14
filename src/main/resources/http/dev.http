@@ -36,6 +36,16 @@ GET {{url}}/api/protected/admin_demo/
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
+###ALL USERS
+GET {{url}}/api/info/users/
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+###USER BY NAME
+GET {{url}}/api/info/users/admin
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
 ### Add a new artist
 POST {{url}}/api/artists
 Content-Type: application/json

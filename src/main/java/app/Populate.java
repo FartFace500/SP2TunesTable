@@ -140,7 +140,13 @@ public class Populate {
         }
 
         try {
-            securityDAO.createUser(username, password);     // createUser method should give the User role
+            app.dtos.UserDTO userDTO = new app.dtos.UserDTO();
+            userDTO.setUsername(username);
+            userDTO.setPassword(password);
+            userDTO.setComments(List.of("comment 1", "comment 2", "comment 3", "comment 4"));
+            userDTO.setBadges(List.of("1:test", "2:created an account"));
+            userDTO.setStats(List.of("lp1:none", "lp2:300", "lp3:14"));
+            securityDAO.createUser(userDTO);     // createUser method should give the User role
             System.out.println("User created with username: " + username);
         } catch (Exception e) {
             System.out.println("Failed to create user: " + e.getMessage());
@@ -157,7 +163,13 @@ public class Populate {
         }
 
         try {
-            securityDAO.createUser(adminUsername, adminPassword);
+            app.dtos.UserDTO userDTO = new app.dtos.UserDTO();
+            userDTO.setUsername(adminUsername);
+            userDTO.setPassword(adminPassword);
+            userDTO.setComments(List.of("comment 1", "comment 2", "comment 3"));
+            userDTO.setBadges(List.of("1:test", "2:created an account", "4:be admin"));
+            userDTO.setStats(List.of("lp1:17", "lp2:none", "lp3:5"));
+            securityDAO.createUser(userDTO);
             securityDAO.addRole(new UserDTO(adminUsername, Set.of(Role.ADMIN.name())), "admin");
             System.out.println("Admin user created with username: " + adminUsername);
         } catch (Exception e) {

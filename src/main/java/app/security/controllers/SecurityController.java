@@ -14,6 +14,7 @@ import app.utils.Utils;
 import dk.bugelhartmann.ITokenSecurity;
 import dk.bugelhartmann.TokenSecurity;
 import dk.bugelhartmann.UserDTO;
+import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.UnauthorizedResponse;
@@ -25,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,6 +49,30 @@ public class SecurityController implements ISecurityController {
         }
         securityDAO = new SecurityDAO(HibernateConfig.getEntityManagerFactory());
         return instance;
+    }
+
+    public void readAllUsers(Context ctx) {
+        List<app.dtos.UserDTO> userDTOList = securityDAO.readAllUsers();
+        ctx.res().setStatus(200);
+        ctx.json(userDTOList, app.dtos.UserDTO.class);
+    }
+
+    public void readUser(Context ctx) {
+        String username = ctx.pathParamAsClass("username", String.class).get();
+        app.dtos.UserDTO userDTO = securityDAO.readUser(username);
+        ctx.res().setStatus(200);
+        ctx.json(userDTO, app.dtos.UserDTO.class);
+    }
+
+    public void updateUser(Context ctx) {
+        String username = ctx.pathParamAsClass("username", String.class).get();
+        app.dtos.UserDTO userDTO = securityDAO.updateUser(username, validateEntity(ctx));
+    }
+
+    public app.dtos.UserDTO validateEntity(Context ctx) {      // TODO add needed checks
+        return ctx.bodyValidator(app.dtos.UserDTO.class)
+//                .check(a -> a.getName() != null && !a.getName().isEmpty(), "Invalid name")
+                .get();
     }
 
     @Override
