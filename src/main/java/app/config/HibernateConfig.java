@@ -107,6 +107,7 @@ public class HibernateConfig {
         props.put("hibernate.connection.username", "postgres");
 //        props.put("hibernate.connection.password", System.getenv("DB_PASSWORD")); //having this on causes a nullpointerexception
         props.put("hibernate.connection.password","postgres");
+        props.setProperty("hibernate.hbm2ddl.auto", "create");
         return props;
     }
 

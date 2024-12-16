@@ -30,7 +30,8 @@ public class SongDAO implements IDAO<SongDTO, Integer> {
             if (song == null) {
                 throw new DaoException.EntityNotFoundException(Song.class, integer);
             }
-            return new SongDTO(song);
+            SongDTO songDTO = new SongDTO(song);
+            return songDTO.trimDTO();
         } catch (Exception e) {
             throw new DaoException.EntityNotFoundException(Song.class, integer);
         }
@@ -40,7 +41,8 @@ public class SongDAO implements IDAO<SongDTO, Integer> {
     public List<SongDTO> readAll() {
         try (EntityManager em = emf.createEntityManager()) {
             TypedQuery<SongDTO> query = em.createQuery("SELECT new app.dtos.SongDTO(s) FROM Song s", SongDTO.class);
-            return query.getResultList();
+            List<SongDTO> songs = query.getResultList();
+            return SongDTO.trimDTOList(songs);
         } catch (Exception e) {
             throw new DaoException.EntityFindAllException(Song.class, e);
         }

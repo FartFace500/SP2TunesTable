@@ -6,6 +6,7 @@ import app.entities.Comment;
 import app.entities.Stat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.Serial;
@@ -39,10 +40,13 @@ public class User implements Serializable, ISecurityUser {
     @Column(name = "password")
     private String password;
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Stat stats;
     @OneToMany
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     List<Badge> badges;
     @OneToMany
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     List<Comment> comments;
 
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_name", referencedColumnName = "username")}, inverseJoinColumns = {@JoinColumn(name = "role_name", referencedColumnName = "name")})

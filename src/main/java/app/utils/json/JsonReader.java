@@ -3,13 +3,11 @@ package app.utils.json;
 import app.dtos.AlbumDTO;
 import app.dtos.ArtistDTO;
 import app.dtos.SongDTO;
-import app.dtos.TracksDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +37,7 @@ public class JsonReader {
             // Access the "items" array directly from tracks
             List<SongDTO> songs = objectMapper.treeToValue(rootNode.path("tracks").path("items"),
                     objectMapper.getTypeFactory().constructCollectionType(List.class, SongDTO.class));
-            album.setTracks(new TracksDTO()); // Initialize TracksDTO
-            album.getTracks().setSongs(songs); // Set the items in TracksDTO
+            album.setSongs(songs);
 
             albumResult = album;
 
@@ -50,7 +47,7 @@ public class JsonReader {
             System.out.println("release date: " + album.getReleaseDate());
             System.out.println("total songs: " + album.getTotalSongs());
             System.out.println("total songs: " + album.getTotalSongs());
-            System.out.println("artists: " + album.getArtists().toString());
+            System.out.println("artist: " + album.getArtist());
             songs.forEach(System.out::println);
 //            System.out.println("songs: " + album.getTracks().getSongs().toString());
         } catch (IOException e) {
@@ -82,10 +79,12 @@ public class JsonReader {
                             objectMapper.getTypeFactory().constructCollectionType(List.class, SongDTO.class));
                     String imageUrl = objectMapper.treeToValue(node.path("images").get(0).path("url"),
                             objectMapper.getTypeFactory().constructType(String.class));
+                    ArtistDTO artist = objectMapper.treeToValue(node.path("artists").get(0),
+                            objectMapper.getTypeFactory().constructType(ArtistDTO.class));
 
                     album.setImageUrl(imageUrl);
-                    album.setTracks(new TracksDTO());
-                    album.getTracks().setSongs(songs);
+                    album.setSongs(songs);
+                    album.setArtist(artist);
 
                     albumList.add(album);
                 }
@@ -103,8 +102,10 @@ public class JsonReader {
                 System.out.println("release date: " + album.getReleaseDate());
                 System.out.println("type: " + album.getType());
                 System.out.println("total songs: " + album.getTotalSongs());
-                System.out.println("artists: " + album.getArtists().toString());
-                album.getTracks().getSongs().forEach(System.out::println);
+                System.out.println("artist: " + album.getArtist());
+                System.out.println("artist-album: " + album.getArtist().getAlbums().toString());
+                System.out.println("artist-song: " + album.getArtist().getSongs().toString());
+                album.getSongs().forEach(System.out::println);
                 System.out.println("");
 //                album.getTracks().getSongs().forEach(song -> songIdList.add(song.getSpotifyId()));
 //                artistIdList.add(album.getArtists().get(0).getSpotifyId());
@@ -193,12 +194,17 @@ public class JsonReader {
             }
         }
         for (AlbumDTO album : albums) {
-            album.getArtists().get(0).setImageUrl(artists.get(album.getArtists().get(0).getSpotifyId()).getImageUrl());
-            album.getArtists().get(0).setGenres(artists.get(album.getArtists().get(0).getSpotifyId()).getGenres());
-            album.getArtists().get(0).setPopularity(artists.get(album.getArtists().get(0).getSpotifyId()).getPopularity());
-            for (SongDTO song : album.getTracks().getSongs()) {
+            ArtistDTO artist = album.getArtist();
+            artist.setImageUrl(artists.get(artist.getSpotifyId()).getImageUrl());
+            artist.setGenres(artists.get(artist.getSpotifyId()).getGenres());
+            artist.setPopularity(artists.get(artist.getSpotifyId()).getPopularity());
+            artist.getAlbums().add(album);
+            album.getSongs().forEach(song -> artist.getSongs().add(song));
+            album.setArtist(artist);
+            for (SongDTO song : album.getSongs()) {
                 song.setImageUrl(songs.get(song.getSpotifyId()).getImageUrl());
                 song.setReleaseDate(songs.get(song.getSpotifyId()).getReleaseDate());
+                song.setAlbum(album);
             }
         }
             return albums;

@@ -23,10 +23,10 @@ public class Song {
     private String releaseDate;
     private String imageUrl;
     private String spotifyId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Exclude
     private Album album;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Exclude
     private Artist artist; //only used for singles
 

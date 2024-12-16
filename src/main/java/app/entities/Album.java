@@ -28,10 +28,10 @@ public class Album {
     private String releaseDate;
     private String imageUrl;
     private String spotifyId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Exclude
     private Artist artist;
-    @OneToMany
+    @OneToMany(mappedBy = "album", fetch = FetchType.EAGER)
     @Cascade(CascadeType.PERSIST)
     private List<Song> songs = new ArrayList<>();
 
@@ -46,13 +46,9 @@ public class Album {
         this.releaseDate = dto.getReleaseDate();
         this.imageUrl = dto.getImageUrl();
         this.spotifyId = dto.getSpotifyId();
-        if (dto.getArtists() != null){
-        this.artist = dto.getArtists().stream().map(artist -> new Artist(artist)).toList().get(0);
-        }
-        if (dto.getTracks() != null){ //problem starts down here
-            if (dto.getTracks().getSongs() != null) {
-                this.songs = dto.getTracks().getSongs().stream().map(song -> new Song(song)).toList();
-            }
+        this.artist = new Artist(dto.getArtist());
+        if (!dto.getSongs().isEmpty()) {
+            this.songs = dto.getSongs().stream().map(song -> new Song(song)).toList();
         }
     }
 
@@ -89,6 +85,8 @@ public class Album {
         if (!this.songs.isEmpty()){
             for (int i = 0; i < totalSongs; i++) {
                 songs.get(i).setSongSearchId(this.albumSearchId + "-" + (i + 1));
+                songs.get(i).setAlbum(this);
+                songs.get(i).setArtist(this.artist);
             }
         }
     }

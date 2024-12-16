@@ -53,7 +53,7 @@ public class Populate {
         SecurityDAO securityDAO = new SecurityDAO(emf);     // securityDao handles creation of users and roles
 
         AlbumDTO albumDTO = JsonReader.readAlbum("");
-        Artist artist = new Artist(albumDTO.getArtists().get(0));
+        Artist artist = new Artist(albumDTO.getArtist());
         int availableAlbumIndex = 1; //starts at one because place 0 is for singles
         int existingAlbums = 0;
 
@@ -103,7 +103,7 @@ public class Populate {
             int availableAlbumIndex = 1; //starts at one because place 0 is for singles
             for (AlbumDTO albumDTO : albumDTOs) {
 
-                Artist artist = new Artist(albumDTO.getArtists().get(0));
+                Artist artist = new Artist(albumDTO.getArtist());
                 em.persist(artist);
 
                 em.flush();     // Flush to get the artist ID

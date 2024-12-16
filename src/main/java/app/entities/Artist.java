@@ -27,10 +27,10 @@ public class Artist {
     private String imageUrl;
     private String spotifyId;
     private String genresAsString;
-    @OneToMany(mappedBy = "artist")
+    @OneToMany(mappedBy = "artist", fetch = FetchType.EAGER)
     @Cascade(CascadeType.PERSIST)
     private List<Album> albums = new ArrayList<>();
-    @OneToMany(mappedBy = "artist")
+    @OneToMany(mappedBy = "artist", fetch = FetchType.EAGER)
     @Cascade(CascadeType.PERSIST) //TODO: possibly change this
     private List<Song> songs = new ArrayList<>(); //only used for singles
 
@@ -60,7 +60,7 @@ public class Artist {
         Album album = new Album(albumDTO);
         if (!albums.contains(album)){
             album.setAlbumSearchId(this.id + "-" + String.valueOf(id));
-            album.addSongsAsDTO(albumDTO.getTracks().getSongs());
+            album.addSongsAsDTO(albumDTO.getSongs());
             album.setArtist(this);
             album.updateSongs();
             this.albums.add(album);

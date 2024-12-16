@@ -35,7 +35,7 @@ public class UserDTO {
         this.stats = user.getStats();
     }
 
-    public static UserDTO getTrimmedDto(User user) {
+    public static UserDTO getTrimmedDTO(User user) {
         UserDTO userDTO = new UserDTO(user);
         userDTO.setPassword(null);
         userDTO.setRoles(null);
@@ -47,6 +47,6 @@ public class UserDTO {
     }
 
     static public List<UserDTO> fromUserDTOList(List<User> users) {
-        return users.stream().collect(Collectors.toSet()).stream().map(UserDTO::getTrimmedDto).collect(Collectors.toList());
+        return users.stream().collect(Collectors.toSet()).stream().map(UserDTO::getTrimmedDTO).collect(Collectors.toList());
     }
 }

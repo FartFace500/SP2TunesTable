@@ -30,7 +30,9 @@ public class AlbumDAO implements IDAO<AlbumDTO, Integer> {
             if (album == null) {
                 throw new DaoException.EntityNotFoundException(Album.class, integer);
             }
-            return new AlbumDTO(album);
+            AlbumDTO albumDTO = new AlbumDTO(album);
+            albumDTO.addInfoAndTrim(album);
+            return albumDTO;
         } catch (Exception e) {
             throw new DaoException.EntityNotFoundException(Album.class, integer);
         }
@@ -39,8 +41,9 @@ public class AlbumDAO implements IDAO<AlbumDTO, Integer> {
     @Override
     public List<AlbumDTO> readAll() {
         try (EntityManager em = emf.createEntityManager()) {
-            TypedQuery<AlbumDTO> query = em.createQuery("SELECT new app.dtos.AlbumDTO(a) FROM Album a", AlbumDTO.class);
-            return query.getResultList();
+            TypedQuery<Album> query = em.createQuery("SELECT a FROM Album a", Album.class);
+            List<Album> albums = query.getResultList();
+            return AlbumDTO.getTrimmedDTOList(albums);
         } catch (Exception e) {
             throw new DaoException.EntityFindAllException(Album.class, e);
         }

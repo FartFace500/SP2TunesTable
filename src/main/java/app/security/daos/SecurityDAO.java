@@ -72,7 +72,7 @@ public class SecurityDAO implements ISecurityDAO {
             User user = em.find(User.class, username);
             if (user == null)
                 throw new EntityNotFoundException("No user found with username: " + username); //RuntimeException
-            return app.dtos.UserDTO.getTrimmedDto(user);
+            return app.dtos.UserDTO.getTrimmedDTO(user);
         }
     }
 
@@ -89,7 +89,7 @@ public class SecurityDAO implements ISecurityDAO {
             user.copyInfoFromDto(userDTO);
             User mergedUser = em.merge(user);
             em.getTransaction().commit();
-            return mergedUser != null ? app.dtos.UserDTO.getTrimmedDto(mergedUser) : null;
+            return mergedUser != null ? app.dtos.UserDTO.getTrimmedDTO(mergedUser) : null;
         } catch (Exception e) {
             throw new DaoException.EntityUpdateException(User.class, username, e);
         }
