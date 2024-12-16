@@ -1,6 +1,9 @@
 package app.security.entities;
 
 import app.dtos.UserDTO;
+import app.entities.Badge;
+import app.entities.Comment;
+import app.entities.Stat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.mindrot.jbcrypt.BCrypt;
@@ -35,12 +38,12 @@ public class User implements Serializable, ISecurityUser {
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
-    @Column(name = "comments")
-    private String comments;
-    @Column(name = "badges")
-    private String badges;
-    @Column(name = "stats")
-    private String stats;
+    @OneToOne
+    private Stat stats;
+    @OneToMany
+    List<Badge> badges;
+    @OneToMany
+    List<Comment> comments;
 
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_name", referencedColumnName = "username")}, inverseJoinColumns = {@JoinColumn(name = "role_name", referencedColumnName = "name")})
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -64,17 +67,17 @@ public class User implements Serializable, ISecurityUser {
     public void copyInfoFromDto(UserDTO dto) {
         this.username = dto.getUsername();
         this.password = dto.getPassword();
-        this.comments = String.join("!",dto.getComments());
-        this.badges = String.join("!",dto.getBadges());
-        this.stats = String.join("!",dto.getStats());
+        this.comments = dto.getComments();
+        this.badges = dto.getBadges();
+        this.stats = dto.getStats();
     }
 
     public User(UserDTO dto){
         this.username = dto.getUsername();
         this.password = BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt());
-        this.comments = String.join("!",dto.getComments());
-        this.badges = String.join("!",dto.getBadges());
-        this.stats = String.join("!",dto.getStats());
+        this.comments = dto.getComments();
+        this.badges = dto.getBadges();
+        this.stats = dto.getStats();
     }
 
     public User(String userName, String userPass) {

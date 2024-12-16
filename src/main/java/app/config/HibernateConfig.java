@@ -1,8 +1,6 @@
 package app.config;
 
-import app.entities.Album;
-import app.entities.Artist;
-import app.entities.Song;
+import app.entities.*;
 import app.security.entities.Role;
 import app.security.entities.User;
 import app.utils.Utils;
@@ -49,6 +47,9 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(Song.class);
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Role.class);
+        configuration.addAnnotatedClass(Stat.class);
+        configuration.addAnnotatedClass(Badge.class);
+        configuration.addAnnotatedClass(Comment.class);
 //        configuration.addAnnotatedClass(Hotel.class);
     }
 

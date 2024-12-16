@@ -19,6 +19,7 @@ public class Song {
     private String name;
     private String type;
     private int songNumber;
+    private int durationMs;
     private String releaseDate;
     private String imageUrl;
     private String spotifyId;
@@ -37,6 +38,7 @@ public class Song {
         this.name = dto.getName();
         this.type = dto.getType();
         this.songNumber = dto.getSongNumber();
+        this.durationMs = dto.getDurationMs();
         this.releaseDate = dto.getReleaseDate();
         this.imageUrl = dto.getImageUrl();
         this.spotifyId = dto.getSpotifyId();

@@ -1,5 +1,8 @@
 package app.dtos;
 
+import app.entities.Badge;
+import app.entities.Comment;
+import app.entities.Stat;
 import app.security.entities.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -20,16 +23,16 @@ public class UserDTO {
     String password;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Set<String> roles = new HashSet();
-    List<String> comments = new ArrayList<>();
-    List<String> badges = new ArrayList<>();
-    List<String> stats = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
+    List<Badge> badges = new ArrayList<>();
+    Stat stats;
 
     public UserDTO(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
-        this.comments = Arrays.stream(user.getComments().split("!")).toList();
-        this.badges = Arrays.stream(user.getBadges().split("!")).toList();
-        this.stats = Arrays.stream(user.getStats().split("!")).toList();
+        this.comments = user.getComments();
+        this.badges = user.getBadges();
+        this.stats = user.getStats();
     }
 
     public static UserDTO getTrimmedDto(User user) {

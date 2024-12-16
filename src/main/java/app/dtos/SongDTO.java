@@ -23,6 +23,8 @@ public class SongDTO {
     //not fetching artist, adding the primary artist manually
     @JsonProperty("track_number")
     int songNumber;
+    @JsonProperty("duration_ms")
+    int durationMs;
     String releaseDate;
     String imageUrl;
 
@@ -34,6 +36,7 @@ public class SongDTO {
         this.name = song.getName();
         this.type = song.getType();
         this.songNumber = song.getSongNumber();
+        this.durationMs = song.getDurationMs();
         this.releaseDate = song.getReleaseDate();
         this.imageUrl = song.getImageUrl();
         this.spotifyId = song.getSpotifyId();
