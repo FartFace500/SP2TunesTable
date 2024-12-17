@@ -40,13 +40,13 @@ public class User implements Serializable, ISecurityUser {
     @Column(name = "password")
     private String password;
     @OneToOne(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Stat stats;
     @OneToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     List<Badge> badges;
     @OneToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     List<Comment> comments;
 
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_name", referencedColumnName = "username")}, inverseJoinColumns = {@JoinColumn(name = "role_name", referencedColumnName = "name")})
@@ -76,11 +76,15 @@ public class User implements Serializable, ISecurityUser {
     }
 
     public void copyInfoFromDto(UserDTO dto) {
-        this.username = dto.getUsername();
-        this.password = dto.getPassword();
-        this.comments = dto.getComments();
-        this.badges = dto.getBadges();
-        this.stats = dto.getStats();
+        List<Comment> commentList = dto.getComments();
+        commentList.forEach(comment -> comment.setUser(this));
+        this.comments = commentList;
+        List<Badge> badgeList = dto.getBadges();
+        badgeList.forEach(badge -> badge.setUser(this));
+        this.badges = badgeList;
+        Stat stat = dto.getStats();
+        stat.setUser(this);
+        this.stats = stat;
     }
 
     public User(UserDTO dto){

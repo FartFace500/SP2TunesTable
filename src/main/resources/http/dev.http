@@ -46,6 +46,73 @@ GET {{url}}/api/info/users/admin
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
+###UPDATE USER
+PUT {{url}}/api/info/users/admin/update_info
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "username": "admin",
+  "password": "$2a$10$tk358v/JLG9U27j5zlHtp.XGSo9ptYWQBYpNHT6NB1vJM5ZwBubZ.",
+  "roles": [
+    "ADMIN",
+    "USER"
+  ],
+  "comments": [
+    {
+      "id": 3,
+      "message": "comment 1"
+    },
+    {
+      "id": 4,
+      "message": "comment 2"
+    },
+    {
+      "id": 5,
+      "message": "comment 3"
+    },
+    {
+      "message": "comment 4, the test"
+    }
+  ],
+  "badges": [
+    {
+      "id": 3,
+      "name": "test",
+      "description": "words"
+    },
+    {
+      "id": 4,
+      "name": "admin",
+      "description": "be admin"
+    },
+    {
+      "id": 5,
+      "name": "thing",
+      "description": "actual test description"
+    }
+  ],
+  "stats": {
+    "id": 2,
+    "artistLeaderboardPlacement": null,
+    "albumLeaderboardPlacement": null,
+    "songLeaderboardPlacement": null,
+    "artistCorrectGuesses": null,
+    "albumCorrectGuesses": null,
+    "songCorrectGuesses": null,
+    "correctGuesses": 3,
+    "artistAverageGuessAmount": null,
+    "albumAverageGuessAmount": null,
+    "songAverageGuessAmount": null,
+    "averageGuessAmount": null,
+    "artistRoundsPlayed": null,
+    "albumRoundsPlayed": null,
+    "songRoundsPlayed": null,
+    "roundsPlayed": 5
+  }
+}
+
+
 ### Add a new artist
 POST {{url}}/api/artists
 Content-Type: application/json

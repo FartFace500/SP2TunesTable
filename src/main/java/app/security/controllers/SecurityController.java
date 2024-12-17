@@ -1,5 +1,6 @@
 package app.security.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nimbusds.jose.JOSEException;
@@ -26,7 +27,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -64,15 +67,25 @@ public class SecurityController implements ISecurityController {
         ctx.json(userDTO, app.dtos.UserDTO.class);
     }
 
-    public void updateUser(Context ctx) {
+    public void updateUserInfo(Context ctx) {
         String username = ctx.pathParamAsClass("username", String.class).get();
-        app.dtos.UserDTO userDTO = securityDAO.updateUser(username, validateEntity(ctx));
+        app.dtos.UserDTO userDTO = securityDAO.updateUserInfo(username, validateEntity(ctx));
+        ctx.res().setStatus(200);
+        ctx.json(userDTO, app.dtos.UserDTO.class);
     }
 
     public app.dtos.UserDTO validateEntity(Context ctx) {      // TODO add needed checks
         return ctx.bodyValidator(app.dtos.UserDTO.class)
 //                .check(a -> a.getName() != null && !a.getName().isEmpty(), "Invalid name")
                 .get();
+    }
+
+    public String getCustomLoginResponse(String token, app.dtos.UserDTO userDTO) throws JsonProcessingException {
+        ObjectMapper om = new ObjectMapper();
+        Map<String, Object> customResponse = new HashMap<>();
+        customResponse.put("token", token);
+        customResponse.put("user", userDTO);
+        return om.writeValueAsString(customResponse);
     }
 
     @Override
@@ -83,10 +96,12 @@ public class SecurityController implements ISecurityController {
                 UserDTO user = ctx.bodyAsClass(UserDTO.class);
                 UserDTO verifiedUser = securityDAO.getVerifiedUser(user.getUsername(), user.getPassword());
                 String token = createToken(verifiedUser);
+                app.dtos.UserDTO userDTO = securityDAO.getLoginDTO(verifiedUser.getUsername());
 
-                ctx.status(200).json(returnObject
-                        .put("token", token)
-                        .put("username", verifiedUser.getUsername()));
+//                ctx.status(200).json(returnObject
+//                        .put("token", token)
+//                        .put("username", verifiedUser.getUsername()));
+                ctx.status(200).json(getCustomLoginResponse(token, userDTO),String.class);
 
             } catch (EntityNotFoundException | ValidationException e) {
                 ctx.status(401);

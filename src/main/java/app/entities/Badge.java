@@ -13,14 +13,15 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 public class Badge {
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private Integer id;
     private String name;
     private String description;
     @ManyToOne
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @ToString.Exclude
     private User user;
 
     public Badge(String name, String description) {

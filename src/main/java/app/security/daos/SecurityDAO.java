@@ -1,6 +1,7 @@
 package app.security.daos;
 
 
+import app.entities.Comment;
 import app.exceptions.DaoException;
 import app.security.entities.Role;
 import app.security.entities.User;
@@ -8,7 +9,9 @@ import app.security.exceptions.ApiException;
 import app.security.exceptions.ValidationException;
 import dk.bugelhartmann.UserDTO;
 import jakarta.persistence.*;
+import org.hibernate.Hibernate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,6 +60,16 @@ public class SecurityDAO implements ISecurityDAO {
     }
 
     @Override
+    public app.dtos.UserDTO getLoginDTO(String username) {
+        try (EntityManager em = getEntityManager()) {
+            User user = em.find(User.class, username);
+            if (user == null)
+                throw new EntityNotFoundException("No user found with username: " + username); //RuntimeException
+            return app.dtos.UserDTO.getLoginDTO(user);
+        }
+    }
+
+    @Override
     public List<app.dtos.UserDTO> readAllUsers() {
         try (EntityManager em = getEntityManager()) {
             List<User> userList = em.createQuery("SELECT u FROM User u", User.class).getResultList();
@@ -77,19 +90,27 @@ public class SecurityDAO implements ISecurityDAO {
     }
 
     @Override
-    public app.dtos.UserDTO updateUser(String username, app.dtos.UserDTO userDTO) {
+    public app.dtos.UserDTO updateUserInfo(String username, app.dtos.UserDTO userDTO) {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
             User user = em.find(User.class, username);
             if (user == null) {
                 throw new DaoException.EntityNotFoundException(User.class, username);
             }
-            user.getRoles().size(); // force roles to be fetched from db
-            userDTO.addRoles(user.getRoles().stream().map(r -> r.getRoleName()).collect(Collectors.toSet()));
+            List<Integer> commentIdsDTO = userDTO.getComments().stream().map(Comment::getId).toList();
+//            List<Comment> commentList = (List<Comment>) user.getComments().stream().map(comment -> {if (!commentIdsDTO.contains(comment.getId())){return comment;});
+            List<Comment> commentList = new ArrayList<>();
+                for (Comment userComment : user.getComments()) {
+                    if (!commentIdsDTO.contains(userComment.getId())){
+                        commentList.add(userComment);
+                    }
+                }
+            System.out.println(commentList);
             user.copyInfoFromDto(userDTO);
             User mergedUser = em.merge(user);
+            commentList.forEach(comment -> {comment.setUser(null); em.createQuery("delete from Comment c where c.id = " + comment.getId()).executeUpdate();});
             em.getTransaction().commit();
-            return mergedUser != null ? app.dtos.UserDTO.getTrimmedDTO(mergedUser) : null;
+            return mergedUser != null ? app.dtos.UserDTO.getLoginDTO(mergedUser) : null;
         } catch (Exception e) {
             throw new DaoException.EntityUpdateException(User.class, username, e);
         }

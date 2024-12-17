@@ -13,9 +13,9 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 public class Stat {
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private Integer id;
 
     @Column(name = "artist_leaderboard_placement")
@@ -54,5 +54,6 @@ public class Stat {
 
     @OneToOne
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @ToString.Exclude
     private User user;
 }

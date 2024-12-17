@@ -13,5 +13,6 @@ public interface ISecurityDAO {
 
     List<app.dtos.UserDTO> readAllUsers();
     app.dtos.UserDTO readUser(String username);
-    app.dtos.UserDTO updateUser(String username, app.dtos.UserDTO userDTO);
+    app.dtos.UserDTO updateUserInfo(String username, app.dtos.UserDTO userDTO);
+    app.dtos.UserDTO getLoginDTO(String username);
 }

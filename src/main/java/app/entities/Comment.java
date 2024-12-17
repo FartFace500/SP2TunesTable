@@ -13,13 +13,14 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 public class Comment {
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private Integer id;
     private String message;
     @ManyToOne
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @ToString.Exclude
     private User user;
 
     public Comment(String message) {

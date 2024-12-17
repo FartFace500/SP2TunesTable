@@ -30,6 +30,7 @@ public class UserDTO {
     public UserDTO(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
+        this.roles = user.getRolesAsStrings();
         this.comments = user.getComments();
         this.badges = user.getBadges();
         this.stats = user.getStats();
@@ -39,6 +40,15 @@ public class UserDTO {
         UserDTO userDTO = new UserDTO(user);
         userDTO.setPassword(null);
         userDTO.setRoles(null);
+        userDTO.getStats().setUser(null);
+        userDTO.getStats().setId(null);
+        userDTO.getBadges().forEach(badge -> {badge.setUser(null); badge.setId(null);});
+        userDTO.getComments().forEach(comment -> {comment.setUser(null); comment.setId(null);});
+        return userDTO;
+    }
+
+    public static UserDTO getLoginDTO(User user) {
+        UserDTO userDTO = new UserDTO(user);
         userDTO.getStats().setUser(null);
         userDTO.getBadges().forEach(badge -> badge.setUser(null));
         userDTO.getComments().forEach(comment -> comment.setUser(null));
