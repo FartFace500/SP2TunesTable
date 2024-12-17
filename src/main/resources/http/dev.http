@@ -16,9 +16,13 @@ POST {{url}}/api/auth/login/
 #    "username": "user456",
 #    "password": "user123"
 #}
+#{
+#    "username": "admin",
+#    "password": "tunesAdmin2024"
+#}
 {
-    "username": "admin",
-    "password": "tunesAdmin2024"
+    "username": "test",
+    "password": "test123"
 }
 
 > {%
@@ -47,28 +51,19 @@ Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
 ###UPDATE USER
-PUT {{url}}/api/info/users/admin/update_info
+PUT {{url}}/api/info/users/test/update_info
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "username": "admin",
-  "password": "$2a$10$tk358v/JLG9U27j5zlHtp.XGSo9ptYWQBYpNHT6NB1vJM5ZwBubZ.",
-  "roles": [
-    "ADMIN",
-    "USER"
-  ],
   "comments": [
     {
-      "id": 3,
       "message": "comment 1"
     },
     {
-      "id": 4,
       "message": "comment 2"
     },
     {
-      "id": 5,
       "message": "comment 3"
     },
     {
@@ -77,23 +72,23 @@ Authorization: Bearer {{jwt_token}}
   ],
   "badges": [
     {
-      "id": 3,
+      "id": 1,
       "name": "test",
       "description": "words"
     },
     {
-      "id": 4,
+      "id": 2,
       "name": "admin",
       "description": "be admin"
     },
     {
-      "id": 5,
+      "id": 33,
       "name": "thing",
-      "description": "actual test description"
+      "description": "huh, this is meant to fail huh is the actual text and the real id is 3"
     }
   ],
   "stats": {
-    "id": 2,
+    "id": 3,
     "artistLeaderboardPlacement": null,
     "albumLeaderboardPlacement": null,
     "songLeaderboardPlacement": null,

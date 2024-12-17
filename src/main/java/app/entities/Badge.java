@@ -1,10 +1,12 @@
 package app.entities;
 
 import app.security.entities.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,10 +21,10 @@ public class Badge {
     private Integer id;
     private String name;
     private String description;
-    @ManyToOne
+    @ManyToMany
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @ToString.Exclude
-    private User user;
+    private List<User> users = new ArrayList<>();
 
     public Badge(String name, String description) {
         this.name = name;

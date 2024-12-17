@@ -11,6 +11,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,13 +42,13 @@ public class User implements Serializable, ISecurityUser {
     private String password;
     @OneToOne(fetch = FetchType.EAGER)
     @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
-    private Stat stats;
+    private Stat stats = new Stat();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
+    List<Badge> badges = new ArrayList<>();
     @OneToMany(fetch = FetchType.EAGER)
     @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
-    List<Badge> badges;
-    @OneToMany(fetch = FetchType.EAGER)
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
-    List<Comment> comments;
+    List<Comment> comments = new ArrayList<>();
 
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_name", referencedColumnName = "username")}, inverseJoinColumns = {@JoinColumn(name = "role_name", referencedColumnName = "name")})
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -71,17 +72,26 @@ public class User implements Serializable, ISecurityUser {
     @PrePersist
     public void SetRelations(){
         this.stats.setUser(this);
-        this.badges.forEach(badge -> badge.setUser(this));
+        this.badges.forEach(badge -> badge.getUsers().add(this));
         this.comments.forEach(comment -> comment.setUser(this));
+    }
+
+    public void addBadge(Badge badge) {
+        if (this.badges.stream().noneMatch(b -> b.getId().equals(badge.getId()))){
+        badge.getUsers().add(this);
+        this.badges.add(badge);
+        }
+    }
+
+    public void clearBadges(){
+        badges.forEach(badge -> badge.getUsers().remove(this));
+        this.badges.clear();
     }
 
     public void copyInfoFromDto(UserDTO dto) {
         List<Comment> commentList = dto.getComments();
         commentList.forEach(comment -> comment.setUser(this));
         this.comments = commentList;
-        List<Badge> badgeList = dto.getBadges();
-        badgeList.forEach(badge -> badge.setUser(this));
-        this.badges = badgeList;
         Stat stat = dto.getStats();
         stat.setUser(this);
         this.stats = stat;

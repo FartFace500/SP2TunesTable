@@ -25,7 +25,7 @@ public class UserDTO {
     Set<String> roles = new HashSet();
     List<Comment> comments = new ArrayList<>();
     List<Badge> badges = new ArrayList<>();
-    Stat stats;
+    Stat stats = new Stat();
 
     public UserDTO(User user) {
         this.username = user.getUsername();
@@ -42,15 +42,17 @@ public class UserDTO {
         userDTO.setRoles(null);
         userDTO.getStats().setUser(null);
         userDTO.getStats().setId(null);
-        userDTO.getBadges().forEach(badge -> {badge.setUser(null); badge.setId(null);});
+        userDTO.getBadges().forEach(badge -> {badge.setUsers(null); badge.setId(null);});
         userDTO.getComments().forEach(comment -> {comment.setUser(null); comment.setId(null);});
         return userDTO;
     }
 
     public static UserDTO getLoginDTO(User user) {
         UserDTO userDTO = new UserDTO(user);
+        userDTO.setPassword(null);
+        userDTO.setRoles(null);
         userDTO.getStats().setUser(null);
-        userDTO.getBadges().forEach(badge -> badge.setUser(null));
+        userDTO.getBadges().forEach(badge -> badge.setUsers(null));
         userDTO.getComments().forEach(comment -> comment.setUser(null));
         return userDTO;
     }

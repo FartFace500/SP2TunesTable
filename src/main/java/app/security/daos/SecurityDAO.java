@@ -1,6 +1,7 @@
 package app.security.daos;
 
 
+import app.entities.Badge;
 import app.entities.Comment;
 import app.exceptions.DaoException;
 import app.security.entities.Role;
@@ -97,18 +98,32 @@ public class SecurityDAO implements ISecurityDAO {
             if (user == null) {
                 throw new DaoException.EntityNotFoundException(User.class, username);
             }
+            user.clearBadges();
             List<Integer> commentIdsDTO = userDTO.getComments().stream().map(Comment::getId).toList();
-//            List<Comment> commentList = (List<Comment>) user.getComments().stream().map(comment -> {if (!commentIdsDTO.contains(comment.getId())){return comment;});
-            List<Comment> commentList = new ArrayList<>();
+            List<Badge> badgeList = em.createQuery("SELECT b FROM Badge b", Badge.class).getResultList();
+            for (Badge badge : badgeList) {
+                boolean isMatch = userDTO.getBadges().stream()
+                        .anyMatch(dto ->
+                                dto.getId().equals(badge.getId()) &&
+                                        dto.getName().equals(badge.getName()) &&
+                                        dto.getDescription().equals(badge.getDescription())
+                        );
+                if (isMatch) {
+                    user.addBadge(badge);
+                    em.merge(user);
+                    em.merge(badge);
+                }
+            }
+            List<Comment> commentsToBeRemoved = new ArrayList<>();
                 for (Comment userComment : user.getComments()) {
                     if (!commentIdsDTO.contains(userComment.getId())){
-                        commentList.add(userComment);
+                        commentsToBeRemoved.add(userComment);
                     }
                 }
-            System.out.println(commentList);
+            System.out.println(commentsToBeRemoved);
             user.copyInfoFromDto(userDTO);
             User mergedUser = em.merge(user);
-            commentList.forEach(comment -> {comment.setUser(null); em.createQuery("delete from Comment c where c.id = " + comment.getId()).executeUpdate();});
+            commentsToBeRemoved.forEach(comment -> {comment.setUser(null); em.createQuery("delete from Comment c where c.id = " + comment.getId()).executeUpdate();});
             em.getTransaction().commit();
             return mergedUser != null ? app.dtos.UserDTO.getLoginDTO(mergedUser) : null;
         } catch (Exception e) {

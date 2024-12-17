@@ -4,6 +4,7 @@ import app.config.HibernateConfig;
 import app.dtos.AlbumDTO;
 import app.entities.*;
 import app.security.daos.SecurityDAO;
+import app.security.entities.User;
 import app.security.enums.Role;
 import app.utils.Utils;
 import app.utils.json.JsonReader;
@@ -40,6 +41,10 @@ public class Populate {
 
             System.out.println(artistCount + "-" + albumCount + "-" + songCount);
             if (artistCount == 0 && albumCount == 0 && songCount == 0) {
+                em.getTransaction().begin();
+                List<Badge> badgeList = List.of(new Badge("test", "words"), new Badge("admin", "be admin"), new Badge("thing", "huh"));
+                badgeList.forEach(em::persist);
+                em.getTransaction().commit();
                 runMulti();
             }
         }
@@ -120,6 +125,32 @@ public class Populate {
 
             }
 
+            List<User> userList = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+            for (User user : userList) {
+                    Badge testBadge = em.createQuery("select b from Badge b WHERE b.name = :name", Badge.class).setParameter("name", "test").getSingleResult();
+                    Badge adminBadge = em.createQuery("select b from Badge b WHERE b.name = :name", Badge.class).setParameter("name", "admin").getSingleResult();
+                    Badge thingBadge = em.createQuery("select b from Badge b WHERE b.name = :name", Badge.class).setParameter("name", "thing").getSingleResult();
+
+                if (user.getUsername().equals("admin")) {
+                    testBadge.getUsers().add(user);
+                    adminBadge.getUsers().add(user);
+                    user.getBadges().add(testBadge);
+                    user.getBadges().add(adminBadge);
+                    em.merge(user);
+                    em.merge(testBadge);
+                    em.merge(adminBadge);
+                }
+                if (user.getUsername().equals("user456")) {
+                    testBadge.getUsers().add(user);
+                    thingBadge.getUsers().add(user);
+                    user.getBadges().add(testBadge);
+                    user.getBadges().add(thingBadge);
+                    em.merge(user);
+                    em.merge(testBadge);
+                    em.merge(thingBadge);
+                }
+            }
+
             em.getTransaction().commit();
             System.out.println("Albums added to database");
         } catch (Exception e) {
@@ -142,8 +173,6 @@ public class Populate {
             userDTO.setUsername(username);
             userDTO.setPassword(password);
             userDTO.setComments(List.of(new Comment("comment 1"), new Comment("comment 2")));
-            userDTO.setBadges(List.of(new Badge("test", "words"), new Badge("thing", "huh")));
-            userDTO.setStats(new Stat());
             securityDAO.createUser(userDTO);     // createUser method should give the User role
             System.out.println("User created with username: " + username);
         } catch (Exception e) {
@@ -165,8 +194,6 @@ public class Populate {
             userDTO.setUsername(adminUsername);
             userDTO.setPassword(adminPassword);
             userDTO.setComments(List.of(new Comment("comment 1"), new Comment("comment 2"), new Comment("comment 3")));
-            userDTO.setBadges(List.of(new Badge("test", "words"), new Badge("admin", "be admin"), new Badge("thing", "huh")));
-            userDTO.setStats(new Stat());
             securityDAO.createUser(userDTO);
             securityDAO.addRole(new UserDTO(adminUsername, Set.of(Role.ADMIN.name())), "admin");
             System.out.println("Admin user created with username: " + adminUsername);
