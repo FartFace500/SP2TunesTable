@@ -1,6 +1,7 @@
 package app.dtos;
 
 import app.entities.Album;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,17 +20,21 @@ import java.util.List;
 public class AlbumDTO {
     String albumId;
     String albumSearchId;
-    String imageUrl; // make custom deserializer that gets the first "url" in "images"'s list
     @JsonProperty("id")
     String spotifyId;
     @JsonProperty("name")
     String name;
     @JsonProperty("type")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     String type;
     @JsonProperty("total_tracks")
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     int totalSongs;
     @JsonProperty("release_date")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     String releaseDate;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    String imageUrl;
     @ToString.Exclude
     @JsonInclude(JsonInclude.Include.NON_NULL)
     ArtistDTO artist;
@@ -48,52 +53,54 @@ public class AlbumDTO {
         this.releaseDate = album.getReleaseDate();
         this.imageUrl = album.getImageUrl();
         this.spotifyId = album.getSpotifyId();
+        addInfoAndTrim(album);
+    }
+
+    public AlbumDTO(Integer id, String albumSearchId, String spotifyId, String name) {
+        this.albumId = String.valueOf(id);
+        this.albumSearchId = albumSearchId;
+        this.spotifyId = spotifyId;
+        this.name = name;
     }
 
     public void addInfoAndTrim(Album album) {
-        ArtistDTO artistDTO = new ArtistDTO(album.getArtist().getId(), album.getArtist().getSpotifyId(), album.getArtist().getName(), album.getArtist().getType(), album.getArtist().getPopularity(), album.getArtist().getImageUrl());
+        ArtistDTO artistDTO = new ArtistDTO(album.getArtist().getId(), album.getArtist().getSpotifyId(), album.getArtist().getName());
         artistDTO.setGenres(Arrays.stream(album.getArtist().getGenresAsString().split("!")).toList());
         this.artist = artistDTO;
         List<SongDTO> songDTOList = new ArrayList<>();
         for (int i = 0; i < album.getSongs().size(); i++) {
-            songDTOList.add(new SongDTO(album.getSongs().get(i).getId(), album.getSongs().get(i).getSongSearchId(), album.getSongs().get(i).getSpotifyId(), album.getSongs().get(i).getName(), album.getSongs().get(i).getType(), album.getSongs().get(i).getSongNumber(), album.getSongs().get(i).getDurationMs(), album.getSongs().get(i).getReleaseDate(), album.getSongs().get(i).getImageUrl()));
+            songDTOList.add(new SongDTO(album.getSongs().get(i).getId(), album.getSongs().get(i).getSongSearchId(), album.getSongs().get(i).getSpotifyId(), album.getSongs().get(i).getName()));
         }
         this.songs = songDTOList;
     }
 
-    public AlbumDTO trimDTO(){
-        AlbumDTO album = this;
-        album.getArtist().setAlbums(null);
-        album.getArtist().setSongs(null);
-        album.getSongs().forEach(song -> {song.setAlbum(null); song.setArtist(null);});
-        return album;
+    @JsonGetter("id")
+    public String getAlbumId() {
+        return albumId;
     }
 
-    static public AlbumDTO getTrimmedDTO(AlbumDTO album){
-        album.getArtist().setAlbums(null);
-        album.getArtist().setSongs(null);
-        album.getSongs().forEach(song -> {song.setAlbum(null); song.setArtist(null);});
-        return album;
+    @JsonGetter("search_id")
+    public String getAlbumSearchId() {
+        return albumSearchId;
     }
 
-    static public AlbumDTO getTrimmedDTO(Album albumE){
-        AlbumDTO album = new AlbumDTO(albumE);
-        album.addInfoAndTrim(albumE);
-        album.getArtist().setAlbums(null);
-        album.getArtist().setSongs(null);
-        album.getSongs().forEach(song -> {song.setAlbum(null); song.setArtist(null);});
-        return album;
+    @JsonGetter("spotify_id")
+    public String getSpotifyId() {
+        return spotifyId;
     }
 
-    static public List<AlbumDTO> trimDTOList(List<AlbumDTO> albums){
-        return albums.stream().map(AlbumDTO::getTrimmedDTO).toList();
+    @JsonGetter("total_songs")
+    public int getTotalSongs() {
+        return totalSongs;
     }
 
-    static public List<AlbumDTO> getTrimmedDTOList(List<Album> albums){
-        return albums.stream().map(AlbumDTO::getTrimmedDTO).toList();
+    @JsonGetter("release_date")
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    static public List<AlbumDTO> getAlbumsAsDTOList(List<Album> albums){
-        return albums.stream().map(AlbumDTO::new).toList();
+    @JsonGetter("image_url")
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

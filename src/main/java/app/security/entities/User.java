@@ -39,13 +39,13 @@ public class User implements Serializable, ISecurityUser {
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Stat stats;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     List<Badge> badges;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     List<Comment> comments;
 
@@ -66,6 +66,13 @@ public class User implements Serializable, ISecurityUser {
 
     public boolean verifyPassword(String pw) {
         return BCrypt.checkpw(pw, this.password);
+    }
+
+    @PrePersist
+    public void SetRelations(){
+        this.stats.setUser(this);
+        this.badges.forEach(badge -> badge.setUser(this));
+        this.comments.forEach(comment -> comment.setUser(this));
     }
 
     public void copyInfoFromDto(UserDTO dto) {

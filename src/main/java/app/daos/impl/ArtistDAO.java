@@ -30,8 +30,7 @@ public class ArtistDAO implements IDAO<ArtistDTO, Integer> {
             if (artist == null) {
                 throw new DaoException.EntityNotFoundException(Artist.class, integer);
             }
-            ArtistDTO artistDTO = new ArtistDTO(artist);
-            return artistDTO.trimDTO();
+            return new ArtistDTO(artist);
         } catch (Exception e) {
             throw new DaoException.EntityNotFoundException(Artist.class, integer);
         }
@@ -41,8 +40,7 @@ public class ArtistDAO implements IDAO<ArtistDTO, Integer> {
     public List<ArtistDTO> readAll() {
         try (EntityManager em = emf.createEntityManager()) {
             TypedQuery<ArtistDTO> query = em.createQuery("SELECT new app.dtos.ArtistDTO(a) FROM Artist a", ArtistDTO.class);
-            List<ArtistDTO> artists = query.getResultList();
-            return ArtistDTO.trimDTOList(artists);
+            return query.getResultList();
         } catch (Exception e) {
             throw new DaoException.EntityFindAllException(Artist.class, e);
         }
