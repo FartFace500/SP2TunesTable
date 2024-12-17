@@ -1,6 +1,8 @@
 package app.entities;
 
 import app.security.entities.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 public class Stat {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -50,5 +53,6 @@ public class Stat {
     private Integer roundsPlayed;
 
     @OneToOne
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private User user;
 }

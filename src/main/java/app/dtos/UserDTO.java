@@ -39,6 +39,9 @@ public class UserDTO {
         UserDTO userDTO = new UserDTO(user);
         userDTO.setPassword(null);
         userDTO.setRoles(null);
+        userDTO.getStats().setUser(null);
+        userDTO.getBadges().forEach(badge -> badge.setUser(null));
+        userDTO.getComments().forEach(comment -> comment.setUser(null));
         return userDTO;
     }
 
