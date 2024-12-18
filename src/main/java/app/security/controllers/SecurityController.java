@@ -1,5 +1,6 @@
 package app.security.controllers;
 
+import app.entities.Badge;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -72,6 +73,12 @@ public class SecurityController implements ISecurityController {
         app.dtos.UserDTO userDTO = securityDAO.updateUserInfo(username, validateEntity(ctx));
         ctx.res().setStatus(200);
         ctx.json(userDTO, app.dtos.UserDTO.class);
+    }
+
+    public void getBadges(Context ctx) {
+        List<Badge> badgeList = securityDAO.getBadges();
+        ctx.res().setStatus(200);
+        ctx.json(badgeList, Badge.class);
     }
 
     public app.dtos.UserDTO validateEntity(Context ctx) {      // TODO add needed checks

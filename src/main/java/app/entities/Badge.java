@@ -22,12 +22,17 @@ public class Badge {
     private String name;
     private String description;
     @ManyToMany
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ToString.Exclude
     private List<User> users = new ArrayList<>();
 
     public Badge(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public static List<Badge> getTrimmedBadges(List<Badge> badges) {
+        badges.forEach(badge -> badge.getUsers().clear());
+        return badges;
     }
 }

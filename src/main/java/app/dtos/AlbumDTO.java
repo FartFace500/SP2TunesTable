@@ -28,7 +28,7 @@ public class AlbumDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     String type;
     @JsonProperty("total_tracks")
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     int totalSongs;
     @JsonProperty("release_date")
     @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -65,13 +65,14 @@ public class ArtistDTO {
             AlbumDTO albumDTO = new AlbumDTO(artist.getAlbums().get(i).getId(), artist.getAlbums().get(i).getAlbumSearchId(), artist.getAlbums().get(i).getSpotifyId(), artist.getAlbums().get(i).getName());
             albumDTOS.add(albumDTO);
         }
-        List<SongDTO> songDTOs = new ArrayList<>();
-        for (int i = 0; i < artist.getSongs().size(); i++) {
-            SongDTO songDTO = new SongDTO(artist.getSongs().get(i).getId(), artist.getSongs().get(i).getSongSearchId(), artist.getSongs().get(i).getSpotifyId(), artist.getSongs().get(i).getName());
-            songDTOs.add(songDTO);
-        }
+//        List<SongDTO> songDTOs = new ArrayList<>();
+//        for (int i = 0; i < artist.getSongs().size(); i++) {
+//            SongDTO songDTO = new SongDTO(artist.getSongs().get(i).getId(), artist.getSongs().get(i).getSongSearchId(), artist.getSongs().get(i).getSpotifyId(), artist.getSongs().get(i).getName());
+//            songDTOs.add(songDTO);
+//        }
         this.albums = albumDTOS;
-        this.songs = songDTOs;
+//        this.songs = songDTOs;
+        this.songs.clear();
         this.genres = Arrays.stream(artist.getGenresAsString().split("!")).toList();
     }
 

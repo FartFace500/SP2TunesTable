@@ -70,6 +70,14 @@ public class SecurityDAO implements ISecurityDAO {
         }
     }
 
+    public List<Badge> getBadges() {
+        try (EntityManager em = getEntityManager()) {
+            List<Badge> badgeList = em.createQuery("SELECT b FROM Badge b", Badge.class).getResultList();
+            if (badgeList.isEmpty()) throw new EntityNotFoundException("No badges found");
+            return Badge.getTrimmedBadges(badgeList);
+        }
+    }
+
     @Override
     public List<app.dtos.UserDTO> readAllUsers() {
         try (EntityManager em = getEntityManager()) {

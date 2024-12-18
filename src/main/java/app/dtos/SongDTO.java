@@ -26,10 +26,10 @@ public class SongDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     String type;
     @JsonProperty("track_number")
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     int songNumber;
     @JsonProperty("duration_ms")
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     int durationMs;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     String releaseDate;

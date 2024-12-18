@@ -1,5 +1,6 @@
 package app.security.daos;
 
+import app.entities.Badge;
 import app.security.entities.User;
 import app.security.exceptions.ValidationException;
 import dk.bugelhartmann.UserDTO;
@@ -15,4 +16,5 @@ public interface ISecurityDAO {
     app.dtos.UserDTO readUser(String username);
     app.dtos.UserDTO updateUserInfo(String username, app.dtos.UserDTO userDTO);
     app.dtos.UserDTO getLoginDTO(String username);
+    List<Badge> getBadges();
 }

@@ -132,22 +132,18 @@ public class Populate {
                     Badge thingBadge = em.createQuery("select b from Badge b WHERE b.name = :name", Badge.class).setParameter("name", "thing").getSingleResult();
 
                 if (user.getUsername().equals("admin")) {
-                    testBadge.getUsers().add(user);
-                    adminBadge.getUsers().add(user);
-                    user.getBadges().add(testBadge);
-                    user.getBadges().add(adminBadge);
+                    user.addBadge(adminBadge);
+                    user.addBadge(testBadge);
                     em.merge(user);
-                    em.merge(testBadge);
                     em.merge(adminBadge);
+                    em.merge(testBadge);
                 }
                 if (user.getUsername().equals("user456")) {
-                    testBadge.getUsers().add(user);
-                    thingBadge.getUsers().add(user);
-                    user.getBadges().add(testBadge);
-                    user.getBadges().add(thingBadge);
+                    user.addBadge(thingBadge);
+                    user.addBadge(testBadge);
                     em.merge(user);
-                    em.merge(testBadge);
                     em.merge(thingBadge);
+                    em.merge(testBadge);
                 }
             }
 

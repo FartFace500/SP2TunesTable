@@ -37,9 +37,10 @@ public class SecurityRoutes {
     public static EndpointGroup getInfoRoutes(){
         return ()->{
             path("/info", ()->{
-                get("/users", securityController::readAllUsers, Role.USER);
-                get("/users/{username}", securityController::readUser, Role.USER);
+                get("/users", securityController::readAllUsers, Role.ANYONE);
+                get("/users/{username}", securityController::readUser, Role.ANYONE);
                 put("/users/{username}/update_info", securityController::updateUserInfo, Role.USER);
+                get("/badges",securityController::getBadges, Role.ANYONE);
             });
         };
     }
