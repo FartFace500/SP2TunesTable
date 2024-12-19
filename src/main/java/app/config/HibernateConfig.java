@@ -103,6 +103,8 @@ public class HibernateConfig {
 
     private static Properties setDevProperties(Properties props) {
         String DBName = Utils.getPropertyValue("DB_NAME", "config.properties");
+//        props.put("hibernate.connection.url", "jdbc:postgresql://165.227.133.24:5432/" + DBName);
+        props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/" + DBName);
         props.put("hibernate.connection.username", "postgres");
 //        props.put("hibernate.connection.password", System.getenv("DB_PASSWORD")); //having this on causes a nullpointerexception
         props.put("hibernate.connection.password","postgres");

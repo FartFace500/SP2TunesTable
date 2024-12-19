@@ -22,14 +22,14 @@ public class SongDTO {
     String spotifyId;
     @JsonProperty("name")
     String name;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("type")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     String type;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     @JsonProperty("track_number")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     int songNumber;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     @JsonProperty("duration_ms")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     int durationMs;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     String releaseDate;

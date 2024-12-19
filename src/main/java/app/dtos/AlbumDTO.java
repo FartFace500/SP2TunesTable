@@ -24,14 +24,14 @@ public class AlbumDTO {
     String spotifyId;
     @JsonProperty("name")
     String name;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("type")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     String type;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     @JsonProperty("total_tracks")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     int totalSongs;
-    @JsonProperty("release_date")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("release_date")
     String releaseDate;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     String imageUrl;
