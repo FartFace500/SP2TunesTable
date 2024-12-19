@@ -42,7 +42,16 @@ public class Populate {
             System.out.println(artistCount + "-" + albumCount + "-" + songCount);
             if (artistCount == 0 && albumCount == 0 && songCount == 0) {
                 em.getTransaction().begin();
-                List<Badge> badgeList = List.of(new Badge("test", "words"), new Badge("admin", "be admin"), new Badge("thing", "huh"));
+                List<Badge> badgeList = List.of(
+                        new Badge("Beta Tester", "Obtained by beta testing the site while it was still in its early stages of development."),
+                        new Badge("Admin", "Be admin, that's all."),
+                        new Badge("The Riddler", "Guess correctly in a single quiz category 10 times."),
+                        new Badge("Tuned In", "Play a round of each quiz category."),
+                        new Badge("How The Tables Have Tuned", "Guess the correct answer once in every quiz category."),
+                        new Badge("Veni Vidi Vici", "Be ranked at the number 1 place on the leaderboard in any quiz category."),
+                        new Badge("The Definition Of Insanity", "Reach an average guess amount of 1 in any category, and have it increase by guessing wrong."),
+                        new Badge("You Tried!", "Finish a round without managing to guess the correct answer.")
+                );
                 badgeList.forEach(em::persist);
                 em.getTransaction().commit();
                 runMulti();
@@ -127,9 +136,8 @@ public class Populate {
 
             List<User> userList = em.createQuery("SELECT u FROM User u", User.class).getResultList();
             for (User user : userList) {
-                    Badge testBadge = em.createQuery("select b from Badge b WHERE b.name = :name", Badge.class).setParameter("name", "test").getSingleResult();
-                    Badge adminBadge = em.createQuery("select b from Badge b WHERE b.name = :name", Badge.class).setParameter("name", "admin").getSingleResult();
-                    Badge thingBadge = em.createQuery("select b from Badge b WHERE b.name = :name", Badge.class).setParameter("name", "thing").getSingleResult();
+                    Badge testBadge = em.createQuery("select b from Badge b WHERE b.name = :name", Badge.class).setParameter("name", "Beta Tester").getSingleResult();
+                    Badge adminBadge = em.createQuery("select b from Badge b WHERE b.name = :name", Badge.class).setParameter("name", "Admin").getSingleResult();
 
                 if (user.getUsername().equals("admin")) {
                     user.addBadge(adminBadge);
@@ -139,10 +147,8 @@ public class Populate {
                     em.merge(testBadge);
                 }
                 if (user.getUsername().equals("user456")) {
-                    user.addBadge(thingBadge);
                     user.addBadge(testBadge);
                     em.merge(user);
-                    em.merge(thingBadge);
                     em.merge(testBadge);
                 }
             }
