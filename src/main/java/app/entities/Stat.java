@@ -35,13 +35,22 @@ public class Stat {
     private Integer correctGuesses;
 
     @Column(name = "artist_average_guess_amount")
-    private Integer artistAverageGuessAmount;
+    private Double artistAverageGuessAmount;
     @Column(name = "album_average_guess_amount")
-    private Integer albumAverageGuessAmount;
+    private Double albumAverageGuessAmount;
     @Column(name = "song_average_guess_amount")
-    private Integer songAverageGuessAmount;
+    private Double songAverageGuessAmount;
     @Column(name = "total_average_guess_amount")
-    private Integer averageGuessAmount;
+    private Double averageGuessAmount;
+
+    @Column(name = "artist_total_guesses")
+    private Integer artistTotalGuesses;
+    @Column(name = "album_total_guesses")
+    private Integer albumTotalGuesses;
+    @Column(name = "song_total_guesses")
+    private Integer songTotalGuesses;
+    @Column(name = "total_guesses")
+    private Integer totalGuesses;
 
     @Column(name = "artist_rounds_played")
     private Integer artistRoundsPlayed;
